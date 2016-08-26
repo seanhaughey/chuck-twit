@@ -1,5 +1,4 @@
 $(document).ready(function(){
-  var joke = '';
   $('#magic').on('click', function (e) {
     e.preventDefault();
     getJoke();
@@ -11,8 +10,8 @@ function getJoke() {
     url: 'http://api.icndb.com/jokes/random'
   })
   .done(function (data) {
-    joke = data.value.joke;
-    $('#joke').html('<h3>' + joke + '</h3>');
+    var joke = data.value.joke;
+    $('#joke').html(joke);
     tweetJoke();
   })
 };
@@ -21,7 +20,7 @@ function tweetJoke() {
   $.ajax({
     url: 'http://localhost:3000',
     method: 'POST',
-    data: {joke: joke}
+    data: {joke: $('#joke').text()}
   })
   .done(function (data) {
     console.log('post');
